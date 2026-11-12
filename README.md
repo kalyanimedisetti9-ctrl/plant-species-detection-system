@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Plant Species Detection System 🌿
 
 A complete, responsive, full-stack web application designed for automated **Plant Species Detection and Botanical Identification** using **Artificial Intelligence, OpenCV Image Processing, and Django**.
@@ -218,3 +219,6 @@ python ml_model/training/train_model.py --epochs 25 --batch_size 32
 ## 📜 License & Academic Attribution
 Developed for academic submission and diploma demonstration.
 All rights reserved © 2026.
+=======
+# plant-species-detection-system
+>>>>>>> origin/main
