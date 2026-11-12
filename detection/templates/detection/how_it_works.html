@@ -1,0 +1,185 @@
+{% extends 'detection/base.html' %}
+{% load static %}
+
+{% block title %}Simple Steps & How It Works - Plant Species Detection System{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    
+    <!-- Page Header -->
+    <div class="text-center mb-5">
+        <span class="badge bg-success bg-opacity-10 text-success fw-bold px-3 py-2 rounded-pill mb-2">Workflow Process</span>
+        <h1 class="fw-bold">Simple Steps</h1>
+        <p class="text-muted mx-auto" style="max-width: 700px;">
+            Our intelligent botanical recognition system makes identifying plants effortless through a streamlined 4-step workflow.
+        </p>
+    </div>
+
+    <!-- 4 Simple Steps Section -->
+    <div class="row g-4 mb-5">
+        <!-- Step 1: Upload Image -->
+        <div class="col-md-6 col-lg-3">
+            <div class="custom-card p-4 h-100 text-center d-flex flex-column align-items-center">
+                <div class="badge bg-success rounded-circle d-flex align-items-center justify-content-center mb-3 fs-5" style="width: 48px; height: 48px;">
+                    1
+                </div>
+                <div class="feature-icon-wrapper mb-3">
+                    <i class="bi bi-cloud-arrow-up-fill"></i>
+                </div>
+                <h5 class="fw-bold text-dark mb-2">1. Upload Image</h5>
+                <p class="text-muted small mb-0">
+                    Upload or drag-and-drop a photo of any leaf, flower, or plant specimen from your device or webcam.
+                </p>
+            </div>
+        </div>
+
+        <!-- Step 2: Process Image -->
+        <div class="col-md-6 col-lg-3">
+            <div class="custom-card p-4 h-100 text-center d-flex flex-column align-items-center">
+                <div class="badge bg-success rounded-circle d-flex align-items-center justify-content-center mb-3 fs-5" style="width: 48px; height: 48px;">
+                    2
+                </div>
+                <div class="feature-icon-wrapper mb-3">
+                    <i class="bi bi-gear-wide-connected"></i>
+                </div>
+                <h5 class="fw-bold text-dark mb-2">2. Process Image</h5>
+                <p class="text-muted small mb-0">
+                    OpenCV standardizes the image format, converts color to RGB, resizes to 224x224, and normalizes pixel intensities.
+                </p>
+            </div>
+        </div>
+
+        <!-- Step 3: AI Model -->
+        <div class="col-md-6 col-lg-3">
+            <div class="custom-card p-4 h-100 text-center d-flex flex-column align-items-center">
+                <div class="badge bg-success rounded-circle d-flex align-items-center justify-content-center mb-3 fs-5" style="width: 48px; height: 48px;">
+                    3
+                </div>
+                <div class="feature-icon-wrapper mb-3">
+                    <i class="bi bi-cpu-fill"></i>
+                </div>
+                <h5 class="fw-bold text-dark mb-2">3. AI Model</h5>
+                <p class="text-muted small mb-0">
+                    TensorFlow & Keras deep neural network extracts morphological features and computes classification probabilities.
+                </p>
+            </div>
+        </div>
+
+        <!-- Step 4: Get Result -->
+        <div class="col-md-6 col-lg-3">
+            <div class="custom-card p-4 h-100 text-center d-flex flex-column align-items-center border-success">
+                <div class="badge bg-success rounded-circle d-flex align-items-center justify-content-center mb-3 fs-5" style="width: 48px; height: 48px;">
+                    4
+                </div>
+                <div class="feature-icon-wrapper mb-3 bg-success text-white">
+                    <i class="bi bi-check-circle-fill"></i>
+                </div>
+                <h5 class="fw-bold text-success mb-2">4. Get Result</h5>
+                <p class="text-muted small mb-0">
+                    Receive instant plant name, Latin scientific binomial, biological family, confidence percentage, and care details.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Technologies Used Cards Section -->
+    <div class="custom-card p-4 p-md-5 mb-5">
+        <div class="text-center mb-4">
+            <span class="badge bg-success bg-opacity-10 text-success fw-bold px-3 py-2 rounded-pill mb-2">Technology Stack</span>
+            <h2 class="fw-bold">Technologies Used</h2>
+            <p class="text-muted">A robust combination of modern computer vision, deep learning, and backend frameworks.</p>
+        </div>
+
+        <div class="row g-3">
+            <!-- Python -->
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="p-3 bg-light rounded-4 text-center h-100 border">
+                    <i class="bi bi-filetype-py text-success fs-1 mb-2 d-block"></i>
+                    <h6 class="fw-bold mb-1">Python</h6>
+                    <small class="text-muted">Core Programming Language</small>
+                </div>
+            </div>
+            <!-- Django -->
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="p-3 bg-light rounded-4 text-center h-100 border">
+                    <i class="bi bi-layers text-success fs-1 mb-2 d-block"></i>
+                    <h6 class="fw-bold mb-1">Django</h6>
+                    <small class="text-muted">Backend Web Framework</small>
+                </div>
+            </div>
+            <!-- OpenCV -->
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="p-3 bg-light rounded-4 text-center h-100 border">
+                    <i class="bi bi-eye text-success fs-1 mb-2 d-block"></i>
+                    <h6 class="fw-bold mb-1">OpenCV</h6>
+                    <small class="text-muted">Image Preprocessing</small>
+                </div>
+            </div>
+            <!-- TensorFlow -->
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="p-3 bg-light rounded-4 text-center h-100 border">
+                    <i class="bi bi-diagram-3-fill text-success fs-1 mb-2 d-block"></i>
+                    <h6 class="fw-bold mb-1">TensorFlow</h6>
+                    <small class="text-muted">Deep Learning Platform</small>
+                </div>
+            </div>
+            <!-- Keras -->
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="p-3 bg-light rounded-4 text-center h-100 border">
+                    <i class="bi bi-node-plus text-success fs-1 mb-2 d-block"></i>
+                    <h6 class="fw-bold mb-1">Keras</h6>
+                    <small class="text-muted">Neural Network Modeling</small>
+                </div>
+            </div>
+            <!-- MySQL -->
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="p-3 bg-light rounded-4 text-center h-100 border">
+                    <i class="bi bi-database text-success fs-1 mb-2 d-block"></i>
+                    <h6 class="fw-bold mb-1">MySQL</h6>
+                    <small class="text-muted">Relational Database</small>
+                </div>
+            </div>
+            <!-- HTML5 -->
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="p-3 bg-light rounded-4 text-center h-100 border">
+                    <i class="bi bi-filetype-html text-success fs-1 mb-2 d-block"></i>
+                    <h6 class="fw-bold mb-1">HTML5</h6>
+                    <small class="text-muted">Structure</small>
+                </div>
+            </div>
+            <!-- CSS3 -->
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="p-3 bg-light rounded-4 text-center h-100 border">
+                    <i class="bi bi-filetype-css text-success fs-1 mb-2 d-block"></i>
+                    <h6 class="fw-bold mb-1">CSS3</h6>
+                    <small class="text-muted">Styling</small>
+                </div>
+            </div>
+            <!-- JavaScript -->
+            <div class="col-6 col-md-4 col-lg-4">
+                <div class="p-3 bg-light rounded-4 text-center h-100 border">
+                    <i class="bi bi-filetype-js text-success fs-1 mb-2 d-block"></i>
+                    <h6 class="fw-bold mb-1">JavaScript</h6>
+                    <small class="text-muted">Client-Side Interactivity</small>
+                </div>
+            </div>
+            <!-- Bootstrap -->
+            <div class="col-12 col-md-8 col-lg-4">
+                <div class="p-3 bg-light rounded-4 text-center h-100 border">
+                    <i class="bi bi-bootstrap-fill text-success fs-1 mb-2 d-block"></i>
+                    <h6 class="fw-bold mb-1">Bootstrap 5</h6>
+                    <small class="text-muted">Responsive Component Framework</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Button -->
+    <div class="text-center">
+        <a href="{% url 'detect_plant' %}" class="btn btn-glow-green btn-lg px-5 py-3">
+            <i class="bi bi-camera-fill me-2"></i> Try Live Detection
+        </a>
+    </div>
+
+</div>
+{% endblock %}

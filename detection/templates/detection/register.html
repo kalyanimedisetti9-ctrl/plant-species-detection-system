@@ -1,0 +1,73 @@
+{% extends 'detection/base.html' %}
+{% load static %}
+
+{% block title %}Register - Plant Species Detection System{% endblock %}
+
+{% block content %}
+<div class="auth-page-wrapper">
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                
+                <div class="auth-card p-4 p-md-5">
+                    <div class="text-center mb-4">
+                        <div class="feature-icon-wrapper mx-auto mb-3">
+                            <i class="bi bi-person-plus-fill"></i>
+                        </div>
+                        <h3 class="fw-bold text-dark">Create an Account</h3>
+                        <p class="text-muted small mb-0">Register to record your plant identifications, access history, and view your dashboard.</p>
+                    </div>
+
+                    <form method="POST" action="{% url 'register' %}">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-dark">Username <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-success border-end-0"><i class="bi bi-person"></i></span>
+                                {{ form.username }}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-dark">Email Address <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-success border-end-0"><i class="bi bi-envelope"></i></span>
+                                {{ form.email }}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-dark">Password <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-success border-end-0"><i class="bi bi-lock"></i></span>
+                                {{ form.password }}
+                            </div>
+                            <small class="text-muted">Minimum 6 characters</small>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold text-dark">Confirm Password <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-success border-end-0"><i class="bi bi-shield-check"></i></span>
+                                {{ form.confirm_password }}
+                            </div>
+                        </div>
+
+                        <div class="d-grid mb-3">
+                            <button type="submit" class="btn btn-glow-green btn-lg py-2">
+                                <i class="bi bi-person-check-fill me-1"></i> Register Account
+                            </button>
+                        </div>
+
+                        <div class="text-center small text-muted">
+                            Already have an account? <a href="{% url 'login' %}" class="text-success fw-bold text-decoration-none">Log in here</a>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

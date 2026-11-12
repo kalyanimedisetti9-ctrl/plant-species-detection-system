@@ -1,0 +1,56 @@
+{% extends 'detection/base.html' %}
+{% load static %}
+
+{% block title %}Login - Plant Species Detection System{% endblock %}
+
+{% block content %}
+<div class="auth-page-wrapper">
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-md-7 col-lg-5">
+                
+                <div class="auth-card p-4 p-md-5">
+                    <div class="text-center mb-4">
+                        <div class="feature-icon-wrapper mx-auto mb-3">
+                            <i class="bi bi-person-lock"></i>
+                        </div>
+                        <h3 class="fw-bold text-dark">User Login</h3>
+                        <p class="text-muted small mb-0">Sign in to access your personal detection dashboard and scan history.</p>
+                    </div>
+
+                    <form method="POST" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-dark">Username</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-success border-end-0"><i class="bi bi-person"></i></span>
+                                <input type="text" name="username" class="form-control border-start-0" placeholder="Enter your username" required autofocus>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold text-dark">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-success border-end-0"><i class="bi bi-lock"></i></span>
+                                <input type="password" name="password" class="form-control border-start-0" placeholder="Enter your password" required>
+                            </div>
+                        </div>
+
+                        <div class="d-grid mb-3">
+                            <button type="submit" class="btn btn-glow-green btn-lg py-2">
+                                <i class="bi bi-box-arrow-in-right me-1"></i> Log In
+                            </button>
+                        </div>
+
+                        <div class="text-center small text-muted">
+                            Don't have an account yet? <a href="{% url 'register' %}" class="text-success fw-bold text-decoration-none">Register here</a>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,232 @@
+{% extends 'detection/base.html' %}
+{% load static %}
+
+{% block title %}Result: {{ detection.predicted_species }} ({{ detection.scientific_name }}){% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    
+    <!-- Top Result Header Card -->
+    <!-- Top Result Header Card -->
+    {% if detection.confidence < 35 %}
+    <div class="result-header-card" style="background: linear-gradient(135deg, #495057 0%, #343a40 100%) !important;">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+                <span class="badge bg-warning text-dark fw-bold px-3 py-1 rounded-pill mb-2">
+                    <i class="bi bi-question-circle-fill me-1"></i> Low Confidence Identification
+                </span>
+                <h1 class="display-6 fw-bold text-white mb-2">
+                    Unable to identify this plant confidently.
+                </h1>
+                <p class="fs-5 text-white-50 mb-0">
+                    Please upload a clear plant or leaf image. <br>
+                    <small class="text-white-50">Closest candidate suggestion: <strong class="text-white">{{ detection.predicted_species }}</strong> (<em>{{ detection.scientific_name }}</em>)</small>
+                </p>
+            </div>
+            
+            <!-- Confidence Score -->
+            <div class="col-lg-4 text-lg-end">
+                <div class="bg-white bg-opacity-10 p-3 rounded-4 border border-white border-opacity-25 d-inline-block text-center w-100">
+                    <small class="text-white-50 text-uppercase fw-bold">Prediction Confidence</small>
+                    <div class="display-6 fw-bold text-warning my-1">
+                        {{ detection.confidence|floatformat:2 }}%
+                    </div>
+                    <div class="confidence-progress-container mb-0">
+                        <div class="confidence-progress-bar bg-warning" style="width: {{ detection.confidence }}%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="result-header-card">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+                <span class="badge bg-light text-success fw-bold px-3 py-1 rounded-pill mb-2">
+                    <i class="bi bi-patch-check-fill me-1"></i> AI Identification Complete
+                </span>
+                <h1 class="display-5 fw-bold text-white mb-1">
+                    {{ detection.predicted_species }}
+                </h1>
+                <p class="fs-4 text-white-50 mb-0">
+                    Scientific Name: <span class="text-white fst-italic fw-semibold">{{ detection.scientific_name }}</span>
+                </p>
+            </div>
+            
+            <!-- Confidence Score -->
+            <div class="col-lg-4 text-lg-end">
+                <div class="bg-white bg-opacity-10 p-3 rounded-4 border border-white border-opacity-25 d-inline-block text-center w-100">
+                    <small class="text-white-50 text-uppercase fw-bold">Prediction Confidence</small>
+                    <div class="display-6 fw-bold text-white my-1">
+                        {{ detection.confidence|floatformat:2 }}%
+                    </div>
+                    <div class="confidence-progress-container mb-0">
+                        <div class="confidence-progress-bar" style="width: {{ detection.confidence }}%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Low Confidence Warning if applicable -->
+    {% if detection.confidence < 60 %}
+        <div class="alert alert-warning d-flex align-items-center mb-4 shadow-sm border-0 rounded-4" role="alert">
+            <i class="bi bi-exclamation-triangle-fill fs-4 me-3 text-warning"></i>
+            <div>
+                <strong>Low confidence prediction:</strong> The image might be blurry, shadowed, taken from an unusual angle, or outside the cataloged botanical classes. Please upload a clear plant or leaf image for higher precision.
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Two Column Desktop Layout -->
+    <div class="row g-4 mb-4">
+        
+        <!-- LEFT COLUMN: Large Uploaded/Detected Plant Image -->
+        <div class="col-lg-5">
+            <div class="custom-card p-4 h-100">
+                <h5 class="fw-bold text-dark mb-3"><i class="bi bi-image me-2 text-success"></i>Uploaded Plant Image</h5>
+                
+                <div class="rounded-4 overflow-hidden border shadow-sm mb-3 position-relative bg-light">
+                    <img src="{{ detection.uploaded_image.url }}" alt="{{ detection.predicted_species }}" class="img-fluid w-100" style="min-height: 280px; max-height: 420px; object-fit: cover;">
+                </div>
+
+                <div class="p-3 bg-light rounded-3 small">
+                    <div class="d-flex justify-content-between mb-1">
+                        <span class="text-muted">Detected At:</span>
+                        <span class="fw-semibold">{{ detection.detected_at|date:"M d, Y - H:i" }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-1">
+                        <span class="text-muted">Processing Engine:</span>
+                        <span class="fw-semibold">OpenCV + TensorFlow / Keras</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span class="text-muted">User:</span>
+                        <span class="fw-semibold">{% if detection.user %}{{ detection.user.username }}{% else %}Guest Scan{% endif %}</span>
+                    </div>
+                </div>
+
+                <!-- Classification Spectrum Breakdown -->
+                {% if top_predictions %}
+                    <div class="mt-4">
+                        <h6 class="fw-bold text-dark mb-2"><i class="bi bi-bar-chart-fill text-success me-2"></i>Classification Probability Spectrum</h6>
+                        <div class="list-group list-group-flush border rounded-3 overflow-hidden">
+                            {% for pred in top_predictions %}
+                                <div class="list-group-item d-flex justify-content-between align-items-center py-2 px-3 {% if forloop.first %}bg-success bg-opacity-10 fw-bold{% endif %}">
+                                    <div>
+                                        <span>{{ pred.species }}</span>
+                                        {% if pred.scientific_name %}
+                                            <small class="text-muted d-block fst-italic">({{ pred.scientific_name }})</small>
+                                        {% endif %}
+                                    </div>
+                                    <span class="badge {% if forloop.first %}bg-success{% else %}bg-secondary{% endif %} rounded-pill">
+                                        {{ pred.confidence }}%
+                                    </span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Plant Identification Result -->
+        <div class="col-lg-7">
+            <div class="custom-card p-4 p-md-5 h-100 d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="fw-bold text-dark mb-0">Plant Identification Result</h3>
+                    <span class="badge bg-success bg-opacity-15 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill">
+                        Verified Taxonomy
+                    </span>
+                </div>
+
+                <!-- Structured Botanical Info Grid -->
+                <div class="row g-3 mb-4">
+                    <div class="col-sm-6">
+                        <div class="p-3 bg-light rounded-3 h-100">
+                            <small class="text-muted text-uppercase fw-bold d-block">Plant Name</small>
+                            <h5 class="fw-bold text-dark mb-0">{{ detection.predicted_species }}</h5>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="p-3 bg-light rounded-3 h-100">
+                            <small class="text-muted text-uppercase fw-bold d-block">Scientific Name</small>
+                            <h5 class="fw-bold text-success scientific-name mb-0">{{ detection.scientific_name }}</h5>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="p-3 bg-light rounded-3 h-100">
+                            <small class="text-muted text-uppercase fw-bold d-block">Family</small>
+                            <h6 class="fw-bold text-dark mb-0">
+                                {% if species_info and species_info.family %}
+                                    {{ species_info.family }}
+                                {% else %}
+                                    Botanical Family
+                                {% endif %}
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="p-3 bg-light rounded-3 h-100">
+                            <small class="text-muted text-uppercase fw-bold d-block">Species</small>
+                            <h6 class="fw-bold text-success scientific-name mb-0">{{ detection.scientific_name }}</h6>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="p-3 bg-success bg-opacity-10 border border-success border-opacity-25 rounded-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-dark fw-bold">Classification Confidence:</span>
+                                <span class="badge bg-success fs-6">{{ detection.confidence|floatformat:2 }}%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="mb-4">
+                    <h6 class="fw-bold text-dark mb-2"><i class="bi bi-card-text text-success me-2"></i>Description</h6>
+                    <p class="text-muted">
+                        {% if species_info and species_info.description %}
+                            {{ species_info.description }}
+                        {% else %}
+                            {{ detection.predicted_species }} is a cataloged botanical species. Characteristic leaves, stems, and petals are classified through deep convolutional feature analysis.
+                        {% endif %}
+                    </p>
+                </div>
+
+                <!-- Care guidelines -->
+                {% if species_info and species_info.care_instructions %}
+                    <div class="mb-4">
+                        <h6 class="fw-bold text-dark mb-2"><i class="bi bi-droplet-fill text-primary me-2"></i>Care Guidelines</h6>
+                        <p class="text-muted small mb-0">
+                            {{ species_info.care_instructions }}
+                        </p>
+                    </div>
+                {% endif %}
+
+                <!-- Action Buttons -->
+                <div class="d-flex flex-wrap gap-3 pt-3 border-top mt-auto">
+                    <a href="{% url 'detect_plant' %}" class="btn btn-glow-green px-4 py-2">
+                        <i class="bi bi-camera-fill me-1"></i> Detect Another Plant
+                    </a>
+                    <button type="button" onclick="window.print()" class="btn btn-outline-success px-3 py-2 rounded-3">
+                        <i class="bi bi-printer me-1"></i> Print Report
+                    </button>
+                    {% if species_info %}
+                        <a href="{% url 'species_detail' species_info.pk %}" class="btn btn-glow-outline px-4 py-2">
+                            <i class="bi bi-info-circle me-1"></i> Catalog Entry
+                        </a>
+                    {% endif %}
+                    <a href="{% url 'home' %}" class="btn btn-outline-secondary rounded-3 px-4 py-2">
+                        <i class="bi bi-house-door me-1"></i> Go Home
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

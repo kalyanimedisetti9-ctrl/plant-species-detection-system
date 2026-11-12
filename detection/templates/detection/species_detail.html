@@ -1,0 +1,119 @@
+{% extends 'detection/base.html' %}
+{% load static %}
+
+{% block title %}{{ species.common_name }} ({{ species.scientific_name }}) - Botanical Profile{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    
+    <!-- Navigation Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-success text-decoration-none">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'species_list' %}" class="text-success text-decoration-none">Species Catalog</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ species.common_name }}</li>
+        </ol>
+    </nav>
+
+    <div class="row g-4 mb-5">
+        <!-- Image Column -->
+        <div class="col-lg-5">
+            <div class="custom-card p-3 h-100">
+                <div class="rounded-4 overflow-hidden border shadow-sm" style="height: 380px; background-color: #e8f5e9;">
+                    {% if species.image %}
+                        <img src="{{ species.image.url }}" alt="{{ species.common_name }}" class="w-100 h-100" style="object-fit: cover;">
+                    {% else %}
+                        <div class="w-100 h-100 d-flex align-items-center justify-content-center text-success">
+                            <i class="bi bi-flower1 display-1 opacity-50"></i>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="p-3 mt-3 bg-light rounded-3 text-center">
+                    <small class="text-muted d-block">Identifiable via AI Neural Network</small>
+                    <a href="{% url 'detect_plant' %}" class="btn btn-glow-green btn-sm mt-2 px-3">
+                        <i class="bi bi-camera"></i> Test Detection with this Plant
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botanical Info Column -->
+        <div class="col-lg-7">
+            <div class="custom-card p-4 p-md-5 h-100">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h1 class="fw-bold text-dark mb-0">{{ species.common_name }}</h1>
+                    {% if species.family %}
+                        <span class="badge bg-success bg-opacity-15 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill">
+                            Family: {{ species.family }}
+                        </span>
+                    {% endif %}
+                </div>
+                
+                <h4 class="scientific-name text-success mb-4">{{ species.scientific_name }}</h4>
+
+                <div class="mb-4">
+                    <h5 class="fw-bold text-dark mb-2"><i class="bi bi-card-text text-success me-2"></i>Botanical Description</h5>
+                    <p class="text-muted leading-relaxed">
+                        {{ species.description }}
+                    </p>
+                </div>
+
+                {% if species.care_instructions %}
+                    <div class="mb-4">
+                        <h5 class="fw-bold text-dark mb-2"><i class="bi bi-droplet-fill text-primary me-2"></i>Care & Growing Conditions</h5>
+                        <p class="text-muted small">
+                            {{ species.care_instructions }}
+                        </p>
+                    </div>
+                {% endif %}
+
+                {% if species.medicinal_uses %}
+                    <div class="mb-4">
+                        <h5 class="fw-bold text-dark mb-2"><i class="bi bi-heart-pulse-fill text-danger me-2"></i>Medicinal & Economic Significance</h5>
+                        <p class="text-muted small">
+                            {{ species.medicinal_uses }}
+                        </p>
+                    </div>
+                {% endif %}
+
+                <div class="pt-4 border-top d-flex gap-3">
+                    <a href="{% url 'species_list' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to Catalog
+                    </a>
+                    <a href="{% url 'detect_plant' %}" class="btn btn-glow-green">
+                        <i class="bi bi-camera-fill"></i> Upload & Detect Plant
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Plants in same family -->
+    {% if related_species %}
+        <div class="mt-5">
+            <h4 class="fw-bold mb-4"><i class="bi bi-diagram-2 text-success me-2"></i>Related Species in {{ species.family }}</h4>
+            <div class="row g-4">
+                {% for rel in related_species %}
+                    <div class="col-md-4">
+                        <div class="custom-card p-3 h-100 d-flex align-items-center gap-3">
+                            <div class="rounded-3 overflow-hidden" style="width: 80px; height: 80px; background-color: #e8f5e9; flex-shrink: 0;">
+                                {% if rel.image %}
+                                    <img src="{{ rel.image.url }}" alt="{{ rel.common_name }}" class="w-100 h-100" style="object-fit: cover;">
+                                {% else %}
+                                    <div class="w-100 h-100 d-flex align-items-center justify-content-center text-success"><i class="bi bi-flower1"></i></div>
+                                {% endif %}
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-1">{{ rel.common_name }}</h6>
+                                <p class="scientific-name small mb-2">{{ rel.scientific_name }}</p>
+                                <a href="{% url 'species_detail' rel.pk %}" class="btn btn-sm btn-outline-success">View</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

@@ -1,0 +1,122 @@
+{% extends 'detection/base.html' %}
+{% load static %}
+
+{% block title %}Plant Species Catalog - Botanical Knowledge Base{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    
+    <!-- Page Header -->
+    <div class="text-center mb-4">
+        <span class="badge bg-success bg-opacity-10 text-success fw-bold px-3 py-2 rounded-pill mb-2">Botanical Database</span>
+        <h1 class="fw-bold">Plant Species Catalog</h1>
+        <p class="text-muted mx-auto" style="max-width: 700px;">
+            Explore our extensive database of cataloged plant species, Latin scientific taxonomy, and biological family classifications.
+        </p>
+    </div>
+
+    <!-- Search & Filter Bar -->
+    <div class="custom-card p-3 mb-5">
+        <form method="GET" action="{% url 'species_list' %}" class="row g-2 align-items-center">
+            <div class="col-lg-6 col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0 text-success"><i class="bi bi-search"></i></span>
+                    <input type="text" name="q" value="{{ query }}" class="form-control border-start-0" placeholder="Search by common name, scientific name, or family...">
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4">
+                <select name="family" class="form-select">
+                    <option value="">-- All Biological Families --</option>
+                    {% for fam in families %}
+                        <option value="{{ fam }}" {% if family_filter == fam %}selected{% endif %}>{{ fam }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-lg-2 col-md-2 d-grid">
+                <button type="submit" class="btn btn-glow-green">
+                    <i class="bi bi-funnel me-1"></i> Filter
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Responsive Grid: 4 cards per row on Desktop, 2-3 on Tablet, 1 on Mobile -->
+    {% if page_obj %}
+        <div class="row g-4 mb-5">
+            {% for species in page_obj %}
+                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="custom-card h-100 d-flex flex-column">
+                        <!-- Plant Image with consistent 4:3 aspect ratio -->
+                        <div class="position-relative overflow-hidden" style="height: 190px; background-color: #0f3822;">
+                            {% if species.image %}
+                                <img src="{{ species.image.url }}" alt="{{ species.common_name }}" class="w-100 h-100" style="object-fit: cover; transition: transform 0.3s ease;">
+                            {% else %}
+                                <div class="w-100 h-100 d-flex align-items-center justify-content-center text-success">
+                                    <i class="bi bi-flower1 display-4 opacity-50"></i>
+                                </div>
+                            {% endif %}
+                            {% if species.family %}
+                                <span class="position-absolute top-0 end-0 m-2 badge bg-dark bg-opacity-75 text-white small">
+                                    {{ species.family }}
+                                </span>
+                            {% endif %}
+                        </div>
+
+                        <!-- Card Body -->
+                        <div class="p-3 d-flex flex-column flex-grow-1">
+                            <h5 class="fw-bold text-dark mb-1">{{ species.common_name }}</h5>
+                            <p class="scientific-name text-success small mb-2">{{ species.scientific_name }}</p>
+                            
+                            <p class="text-muted small mb-3 flex-grow-1" style="font-size: 0.85rem; line-height: 1.4;">
+                                {{ species.description|truncatewords:14 }}
+                            </p>
+
+                            <div class="pt-2 border-top mt-auto">
+                                <a href="{% url 'species_detail' species.pk %}" class="btn btn-glow-green btn-sm w-100 py-2">
+                                    <i class="bi bi-eye-fill me-1"></i> View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if page_obj.has_other_pages %}
+            <nav aria-label="Species Pagination" class="d-flex justify-content-center">
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link text-success" href="?page={{ page_obj.previous_page_number }}&q={{ query }}&family={{ family_filter }}">Previous</a>
+                        </li>
+                    {% endif %}
+
+                    {% for num in page_obj.paginator.page_range %}
+                        <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                            <a class="page-link {% if page_obj.number == num %}bg-success border-success text-white{% else %}text-success{% endif %}" href="?page={{ num }}&q={{ query }}&family={{ family_filter }}">
+                                {{ num }}
+                            </a>
+                        </li>
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link text-success" href="?page={{ page_obj.next_page_number }}&q={{ query }}&family={{ family_filter }}">Next</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endif %}
+
+    {% else %}
+        <div class="custom-card p-5 text-center my-4">
+            <i class="bi bi-search text-muted display-4 mb-3"></i>
+            <h4 class="fw-bold">No Plant Species Found</h4>
+            <p class="text-muted">Try clearing the search query or selecting a different biological family filter.</p>
+            <a href="{% url 'species_list' %}" class="btn btn-glow-green mt-2">Reset Filters</a>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends 'detection/base.html' %}
+{% load static %}
+
+{% block title %}Contact Us - Plant Species Detection System{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    
+    <!-- Page Header -->
+    <div class="text-center mb-5">
+        <span class="badge bg-success bg-opacity-10 text-success fw-bold px-3 py-2 rounded-pill mb-2">Get In Touch</span>
+        <h1 class="fw-bold">Contact Us</h1>
+        <p class="text-muted mx-auto" style="max-width: 600px;">
+            Have inquiries regarding the botanical identification system or research datasets? Reach out to our project team.
+        </p>
+    </div>
+
+    <div class="row g-5">
+        <!-- LEFT COLUMN: Get In Touch Details -->
+        <div class="col-lg-5">
+            <div class="custom-card p-4 p-md-5 h-100 text-white" style="background: linear-gradient(135deg, #092615 0%, #0f3822 60%, #15803d 100%); border: 1px solid rgba(34, 197, 94, 0.3);">
+                <h3 class="fw-bold text-white mb-4">Get In Touch</h3>
+                <p class="text-white-50 mb-4">
+                    The Plant Species Detection System is maintained as part of academic research in artificial intelligence, computer vision, and botanical informatics.
+                </p>
+
+                <!-- Email -->
+                <div class="d-flex align-items-start mb-4">
+                    <div class="feature-icon-wrapper bg-white bg-opacity-10 text-white me-3 mb-0" style="width: 46px; height: 46px; font-size: 1.25rem;">
+                        <i class="bi bi-envelope-fill"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold text-white mb-1">Email</h6>
+                        <a href="mailto:plantdetect@gmail.com" class="text-white text-decoration-none small">plantdetect@gmail.com</a>
+                    </div>
+                </div>
+
+                <!-- Phone: 9959890369 Clickable -->
+                <div class="d-flex align-items-start mb-4">
+                    <div class="feature-icon-wrapper bg-white bg-opacity-10 text-white me-3 mb-0" style="width: 46px; height: 46px; font-size: 1.25rem;">
+                        <i class="bi bi-telephone-fill"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold text-white mb-1">Phone</h6>
+                        <a href="tel:9959890369" class="text-white fw-bold fs-6 text-decoration-none">9959890369</a>
+                    </div>
+                </div>
+
+                <!-- Location -->
+                <div class="d-flex align-items-start mb-4">
+                    <div class="feature-icon-wrapper bg-white bg-opacity-10 text-white me-3 mb-0" style="width: 46px; height: 46px; font-size: 1.25rem;">
+                        <i class="bi bi-geo-alt-fill"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold text-white mb-1">Location</h6>
+                        <p class="text-white-50 small mb-0">Aditya Polytechnic College</p>
+                    </div>
+                </div>
+
+                <div class="mt-auto pt-3 border-top border-white border-opacity-25">
+                    <span class="small text-white-50">Academic Project Support</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Contact Form -->
+        <div class="col-lg-7">
+            <div class="custom-card p-4 p-md-5">
+                <h3 class="fw-bold text-dark mb-4">Send a Message</h3>
+                
+                <form method="POST" action="{% url 'contact' %}">
+                    {% csrf_token %}
+                    
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold text-dark">Name <span class="text-danger">*</span></label>
+                            {{ form.name }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold text-dark">Email <span class="text-danger">*</span></label>
+                            {{ form.email }}
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-semibold text-dark">Subject <span class="text-danger">*</span></label>
+                            {{ form.subject }}
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-semibold text-dark">Message <span class="text-danger">*</span></label>
+                            {{ form.message }}
+                        </div>
+                        <div class="col-12 pt-2">
+                            <button type="submit" class="btn btn-glow-green btn-lg px-5 py-3 w-100">
+                                <i class="bi bi-send-fill me-2"></i> Send Message
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,195 @@
+{% extends 'detection/base.html' %}
+{% load static %}
+
+{% block title %}About Project - Plant Species Detection System{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    
+    <!-- Header -->
+    <div class="text-center mb-5">
+        <span class="badge bg-success bg-opacity-10 text-success fw-bold px-3 py-2 rounded-pill mb-2">Project Overview</span>
+        <h1 class="fw-bold">About The Project</h1>
+        <p class="text-muted mx-auto" style="max-width: 700px;">
+            A Diploma-level academic project implementing computer vision and deep learning techniques to automate plant species recognition and taxonomic retrieval.
+        </p>
+    </div>
+
+    <!-- Top Two-Column Section: Left Description, Right Realistic Plant Image -->
+    <div class="row g-5 align-items-center mb-5">
+        <!-- Left Column: Title & Description -->
+        <div class="col-lg-6">
+            <div class="custom-card p-4 p-md-5 h-100">
+                <span class="badge bg-success bg-opacity-15 text-success fw-bold px-3 py-1 rounded-pill mb-3">Academic Research</span>
+                <h2 class="fw-bold text-dark mb-3">Automated Botanical Identification</h2>
+                <p class="text-muted">
+                    The <strong>Plant Species Detection System</strong> is an intelligent web platform designed to streamline botanical classification using state-of-the-art computer vision and deep learning architectures.
+                </p>
+                <p class="text-muted">
+                    Manual identification of plants from leaves and flora often demands specialized taxonomic knowledge and extensive reference manuals. By leveraging <strong>OpenCV</strong> image preprocessing and <strong>TensorFlow/Keras</strong> convolutional neural networks, this platform provides immediate species identification along with Latin binomial scientific names, biological families, and cultivation properties.
+                </p>
+                <div class="p-3 bg-light rounded-3 border-start border-4 border-success mt-4">
+                    <p class="mb-0 small text-dark fw-semibold">
+                        Developed as a practical Diploma project demonstration highlighting end-to-end machine learning pipelines integrated with a full-stack Django backend.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Large Realistic Plant Image -->
+        <div class="col-lg-6">
+            <div class="hero-image-wrapper">
+                <img src="https://images.stockcake.com/public/b/9/2/b92b9ba2-5938-4743-864c-456a5128a68b_large/new-plant-growth-stockcake.jpg" alt="Botanical Plant Specimen" class="img-fluid" style="height: 420px; width: 100%; object-fit: cover;">
+                <div class="position-absolute bottom-0 start-0 end-0 p-3 bg-gradient bg-dark bg-opacity-75 text-start border-top border-success border-opacity-25">
+                    <small class="text-white-50 d-block text-uppercase fw-bold">Taxonomic Collection</small>
+                    <h6 class="text-white mb-0 fw-bold">Multi-Species Botanical Recognition</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Our Goals Section -->
+    <div class="mb-5">
+        <div class="text-center mb-4">
+            <span class="badge bg-success bg-opacity-10 text-success fw-bold px-3 py-2 rounded-pill mb-2">Mission & Objectives</span>
+            <h2 class="fw-bold">Our Goals</h2>
+            <p class="text-muted">Core academic and practical objectives targeted by the project.</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- Goal 1 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="custom-card p-4 h-100 bg-light border-0">
+                    <div class="feature-icon-wrapper mb-3 bg-white">
+                        <i class="bi bi-camera-fill text-success"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark mb-2">Identify Plant Species</h5>
+                    <p class="text-muted small mb-0">
+                        Accurately identify plant species directly using leaf and flora photographs with minimal human intervention.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Goal 2 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="custom-card p-4 h-100 bg-light border-0">
+                    <div class="feature-icon-wrapper mb-3 bg-white">
+                        <i class="bi bi-speedometer text-success"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark mb-2">Provide Fast & Accurate Results</h5>
+                    <p class="text-muted small mb-0">
+                        Deliver real-time classification confidence and botanical profiles in under one second.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Goal 3 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="custom-card p-4 h-100 bg-light border-0">
+                    <div class="feature-icon-wrapper mb-3 bg-white">
+                        <i class="bi bi-mortarboard-fill text-success"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark mb-2">Help Students & Researchers</h5>
+                    <p class="text-muted small mb-0">
+                        Serve as an interactive educational aid for students studying botany, taxonomy, and agricultural sciences.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Goal 4 -->
+            <div class="col-md-6 col-lg-6">
+                <div class="custom-card p-4 h-100 bg-light border-0">
+                    <div class="feature-icon-wrapper mb-3 bg-white">
+                        <i class="bi bi-tree-fill text-success"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark mb-2">Support Agricultural Applications</h5>
+                    <p class="text-muted small mb-0">
+                        Assist farmers, agriculturalists, and gardeners in distinguishing crops, beneficial flora, and medicinal herbs.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Goal 5 -->
+            <div class="col-md-12 col-lg-6">
+                <div class="custom-card p-4 h-100 bg-light border-0">
+                    <div class="feature-icon-wrapper mb-3 bg-white">
+                        <i class="bi bi-hand-index-thumb-fill text-success"></i>
+                    </div>
+                    <h5 class="fw-bold text-dark mb-2">Make Plant Identification Easier</h5>
+                    <p class="text-muted small mb-0">
+                        Provide a clean, user-friendly responsive web platform accessible on smartphones, tablets, and computers.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Technologies Used Section -->
+    <div class="mb-4">
+        <div class="text-center mb-4">
+            <span class="badge bg-success bg-opacity-10 text-success fw-bold px-3 py-2 rounded-pill mb-2">Architecture</span>
+            <h2 class="fw-bold">Technologies Used</h2>
+            <p class="text-muted">Modular tech stack supporting responsive frontend, secure backend, and deep learning inference.</p>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="custom-card p-3 text-center h-100">
+                    <i class="bi bi-filetype-py text-success fs-1 mb-2"></i>
+                    <h6 class="fw-bold mb-1">Python</h6>
+                    <small class="text-muted">Core Programming Language</small>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="custom-card p-3 text-center h-100">
+                    <i class="bi bi-layers text-success fs-1 mb-2"></i>
+                    <h6 class="fw-bold mb-1">Django</h6>
+                    <small class="text-muted">Backend Web Framework</small>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="custom-card p-3 text-center h-100">
+                    <i class="bi bi-diagram-3-fill text-success fs-1 mb-2"></i>
+                    <h6 class="fw-bold mb-1">TensorFlow</h6>
+                    <small class="text-muted">Deep Learning Platform</small>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="custom-card p-3 text-center h-100">
+                    <i class="bi bi-node-plus text-success fs-1 mb-2"></i>
+                    <h6 class="fw-bold mb-1">Keras</h6>
+                    <small class="text-muted">Neural Network Modeling</small>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="custom-card p-3 text-center h-100">
+                    <i class="bi bi-eye text-success fs-1 mb-2"></i>
+                    <h6 class="fw-bold mb-1">OpenCV</h6>
+                    <small class="text-muted">Image Processing & Resizing</small>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="custom-card p-3 text-center h-100">
+                    <i class="bi bi-database text-success fs-1 mb-2"></i>
+                    <h6 class="fw-bold mb-1">MySQL</h6>
+                    <small class="text-muted">Relational Database</small>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="custom-card p-3 text-center h-100">
+                    <i class="bi bi-filetype-html text-success fs-1 mb-2"></i>
+                    <h6 class="fw-bold mb-1">HTML5 & CSS3</h6>
+                    <small class="text-muted">Semantic Web Styling</small>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="custom-card p-3 text-center h-100">
+                    <i class="bi bi-bootstrap-fill text-success fs-1 mb-2"></i>
+                    <h6 class="fw-bold mb-1">Bootstrap 5</h6>
+                    <small class="text-muted">Responsive UI Components</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

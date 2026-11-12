@@ -1,0 +1,121 @@
+{% extends 'detection/base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - {{ user.username }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    
+    <!-- Welcome Header Banner -->
+    <div class="result-header-card mb-4">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <span class="badge bg-light text-success fw-bold px-3 py-1 rounded-pill mb-2">User Control Center</span>
+                <h1 class="text-white fw-bold mb-1">Welcome back, {{ user.username }}!</h1>
+                <p class="text-white-50 mb-0">Track your botanical classification activity, explore recent scans, and manage detection logs.</p>
+            </div>
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <a href="{% url 'detect_plant' %}" class="btn btn-glow-green btn-lg px-4 py-2">
+                    <i class="bi bi-camera-fill me-1"></i> New Detection
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Metrics Cards -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="custom-card p-4 text-center">
+                <div class="feature-icon-wrapper mx-auto mb-3">
+                    <i class="bi bi-images"></i>
+                </div>
+                <h2 class="fw-bold text-dark mb-1">{{ total_user_detections }}</h2>
+                <span class="text-muted small">Total Plants Identified</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="custom-card p-4 text-center">
+                <div class="feature-icon-wrapper mx-auto mb-3">
+                    <i class="bi bi-speedometer"></i>
+                </div>
+                <h2 class="fw-bold text-success mb-1">{{ avg_confidence }}%</h2>
+                <span class="text-muted small">Average Confidence Score</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="custom-card p-4 text-center">
+                <div class="feature-icon-wrapper mx-auto mb-3">
+                    <i class="bi bi-calendar-check"></i>
+                </div>
+                <h2 class="fw-bold text-dark mb-1">{{ user.date_joined|date:"M Y" }}</h2>
+                <span class="text-muted small">Member Since</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Detections Section -->
+    <div class="custom-card p-4 p-md-5 mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="fw-bold text-dark mb-0"><i class="bi bi-clock-history text-success me-2"></i>Recent Detection Scans</h4>
+            {% if total_user_detections > 5 %}
+                <a href="{% url 'history' %}" class="btn btn-sm btn-outline-success">View Full History ({{ total_user_detections }})</a>
+            {% endif %}
+        </div>
+
+        {% if recent_detections %}
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">Plant Image</th>
+                            <th scope="col">Predicted Species</th>
+                            <th scope="col">Scientific Name</th>
+                            <th scope="col">Confidence</th>
+                            <th scope="col">Date Scanned</th>
+                            <th scope="col" class="text-end">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in recent_detections %}
+                            <tr>
+                                <td style="width: 80px;">
+                                    <img src="{{ item.uploaded_image.url }}" alt="{{ item.predicted_species }}" class="rounded-3 shadow-sm" style="width: 55px; height: 55px; object-fit: cover;">
+                                </td>
+                                <td>
+                                    <strong class="text-dark">{{ item.predicted_species }}</strong>
+                                </td>
+                                <td>
+                                    <span class="scientific-name text-success">{{ item.scientific_name }}</span>
+                                </td>
+                                <td>
+                                    <span class="badge {% if item.confidence >= 80 %}bg-success{% elif item.confidence >= 50 %}bg-warning text-dark{% else %}bg-danger{% endif %} rounded-pill">
+                                        {{ item.confidence|floatformat:1 }}%
+                                    </span>
+                                </td>
+                                <td class="text-muted small">
+                                    {{ item.detected_at|date:"M d, Y - H:i" }}
+                                </td>
+                                <td class="text-end">
+                                    <a href="{% url 'detection_result' item.pk %}" class="btn btn-sm btn-outline-success me-1">
+                                        <i class="bi bi-eye"></i> View
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <i class="bi bi-camera text-muted display-3 mb-3"></i>
+                <h5 class="fw-bold">No Detections Yet</h5>
+                <p class="text-muted">You haven't uploaded any plant images for identification yet.</p>
+                <a href="{% url 'detect_plant' %}" class="btn btn-glow-green mt-2">
+                    <i class="bi bi-cloud-arrow-up me-1"></i> Start Your First Detection
+                </a>
+            </div>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}

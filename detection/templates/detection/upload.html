@@ -1,0 +1,185 @@
+{% extends 'detection/base.html' %}
+{% load static %}
+
+{% block title %}Detect Plant Species - AI Identification{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            
+            <!-- Page Header -->
+            <div class="text-center mb-4">
+                <span class="badge bg-success bg-opacity-10 text-success fw-bold px-3 py-2 rounded-pill mb-2">AI Image Classification</span>
+                <h1 class="fw-bold">Upload Plant Image</h1>
+                <p class="text-muted">
+                    Upload a clear image of a leaf or plant to detect the species.
+                </p>
+            </div>
+
+            <!-- Upload Card Wrapper with subtle leaf decorations -->
+            <div class="upload-container-wrapper mb-4">
+                <i class="bi bi-flower1 leaf-decoration-left"></i>
+                <i class="bi bi-flower2 leaf-decoration-right"></i>
+
+                <div class="custom-card p-4 p-md-5">
+                    <form method="POST" enctype="multipart/form-data" id="detect-upload-form">
+                        {% csrf_token %}
+
+                        <!-- Drag and Drop Zone -->
+                        <div class="dropzone-container mb-4" id="dropzone">
+                            {{ form.uploaded_image }}
+                            <div class="dropzone-icon">
+                                <i class="bi bi-cloud-arrow-up-fill"></i>
+                            </div>
+                            <h4 class="fw-bold text-dark mb-1">Drag & Drop Your Plant Image Here</h4>
+                            <p class="text-muted small mb-3">or click anywhere in this area to browse from your device</p>
+                            
+                            <div class="d-inline-flex flex-wrap justify-content-center align-items-center gap-2 px-3 py-2 bg-light rounded-pill border small text-muted mb-2">
+                                <span><i class="bi bi-file-earmark-image text-success"></i> Supported Formats: <strong>JPG, JPEG, PNG</strong></span>
+                                <span>&bull;</span>
+                                <span>Max Size: <strong>10MB</strong></span>
+                            </div>
+
+                            <!-- Selected File Name Badge -->
+                            <div id="selected-file-name" class="fw-bold text-success mt-2 small"></div>
+
+                            <!-- Image Preview Box -->
+                            <div class="image-preview-wrapper mt-3" id="image-preview-wrapper">
+                                <img id="preview-image" src="#" alt="Plant Preview">
+                                <div class="p-2 bg-light text-center border-top">
+                                    <button type="button" class="btn btn-sm btn-outline-danger" id="remove-image-btn">
+                                        <i class="bi bi-trash"></i> Remove Image
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="d-flex flex-wrap justify-content-center gap-3">
+                            <button type="button" class="btn btn-outline-success px-4 py-2 rounded-3" id="open-camera-btn" data-bs-toggle="modal" data-bs-target="#cameraModal">
+                                <i class="bi bi-camera-video me-1"></i> Capture with Camera
+                            </button>
+                            <button type="submit" class="btn btn-glow-green btn-lg px-5 py-2" id="detect-submit-btn" disabled>
+                                <i class="bi bi-search me-2"></i> Detect Plant
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Tips & Recommendations Card -->
+            <div class="custom-card p-4 bg-light border-0">
+                <h6 class="fw-bold text-dark mb-3"><i class="bi bi-lightbulb-fill text-warning me-2"></i>Tips for Best Detection Accuracy:</h6>
+                <div class="row g-3 small text-muted">
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-sun text-success fs-4 me-2"></i>
+                            <span>Ensure good natural lighting on leaves and flowers.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-aspect-ratio text-success fs-4 me-2"></i>
+                            <span>Focus closely on the distinctive floral petals or leaf venation.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-check2-circle text-success fs-4 me-2"></i>
+                            <span>Avoid blurry, overcrowded, or heavily shadowed photos.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Webcam Capture Modal -->
+<div class="modal fade" id="cameraModal" tabindex="-1" aria-labelledby="cameraModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title fw-bold" id="cameraModalLabel"><i class="bi bi-camera me-2 text-success"></i>Capture Plant Photo</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" id="close-camera-modal"></button>
+            </div>
+            <div class="modal-body p-3 text-center bg-black">
+                <video id="webcam-stream" autoplay playsinline class="w-100 rounded-3" style="max-height: 320px; object-fit: cover; background: #111;"></video>
+                <canvas id="camera-canvas" class="d-none"></canvas>
+            </div>
+            <div class="modal-footer bg-light justify-content-between">
+                <button type="button" class="btn btn-secondary rounded-pill px-3" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-glow-green px-4" id="capture-photo-btn">
+                    <i class="bi bi-camera-fill me-1"></i> Take Snapshot
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Live Webcam Integration
+    const openCameraBtn = document.getElementById('open-camera-btn');
+    const captureBtn = document.getElementById('capture-photo-btn');
+    const videoEl = document.getElementById('webcam-stream');
+    const canvasEl = document.getElementById('camera-canvas');
+    const cameraModal = document.getElementById('cameraModal');
+    let activeStream = null;
+
+    if (openCameraBtn && videoEl) {
+        cameraModal.addEventListener('shown.bs.modal', async () => {
+            try {
+                activeStream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } }
+                });
+                videoEl.srcObject = activeStream;
+            } catch (err) {
+                alert('Unable to access camera: ' + err.message);
+                const modalInstance = bootstrap.Modal.getInstance(cameraModal);
+                modalInstance.hide();
+            }
+        });
+
+        cameraModal.addEventListener('hidden.bs.modal', () => {
+            if (activeStream) {
+                activeStream.getTracks().forEach(track => track.stop());
+                activeStream = null;
+            }
+        });
+
+        captureBtn.addEventListener('click', () => {
+            if (!activeStream) return;
+            canvasEl.width = videoEl.videoWidth || 640;
+            canvasEl.height = videoEl.videoHeight || 480;
+            const ctx = canvasEl.getContext('2d');
+            ctx.drawImage(videoEl, 0, 0, canvasEl.width, canvasEl.height);
+
+            canvasEl.toBlob((blob) => {
+                const file = new File([blob], "camera_plant_capture.jpg", { type: "image/jpeg" });
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                const fileInput = document.getElementById('plant-image-input');
+                fileInput.files = dataTransfer.files;
+
+                // Update UI preview
+                const previewImg = document.getElementById('preview-image');
+                const previewWrapper = document.getElementById('image-preview-wrapper');
+                const fileNameDisplay = document.getElementById('selected-file-name');
+                const detectBtn = document.getElementById('detect-submit-btn');
+
+                previewImg.src = URL.createObjectURL(file);
+                previewWrapper.style.display = 'block';
+                fileNameDisplay.textContent = 'camera_plant_capture.jpg (Captured live)';
+                detectBtn.disabled = false;
+
+                const modalInstance = bootstrap.Modal.getInstance(cameraModal);
+                modalInstance.hide();
+            }, 'image/jpeg', 0.95);
+        });
+    }
+</script>
+{% endblock %}

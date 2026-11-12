@@ -1,0 +1,518 @@
+/*
+=============================================================================
+ PLANT SPECIES DETECTION SYSTEM - DARK GREEN & WHITE PREMIUM THEME
+=============================================================================
+*/
+
+:root {
+    --primary-dark: #092615;       /* Deepest Forest Green */
+    --primary-forest: #0f3822;     /* Forest Green */
+    --primary-green: #15803d;      /* Lush Leaf Green */
+    --primary-emerald: #16a34a;    /* Emerald Green */
+    --accent-emerald: #22c55e;     /* Bright Accent Green */
+    --accent-light: #f0fdf4;       /* Soft Light Green background */
+    --accent-mint: #dcfce7;        /* Mint Highlight */
+    --neutral-white: #ffffff;
+    --neutral-light: #f8fafc;
+    --neutral-gray: #64748b;
+    --neutral-dark: #0f172a;
+    --glow-shadow: 0 0 16px rgba(34, 197, 94, 0.45);
+    --glow-shadow-strong: 0 0 24px rgba(34, 197, 94, 0.7), 0 8px 16px rgba(21, 128, 61, 0.35);
+    --card-shadow: 0 10px 25px -5px rgba(15, 56, 34, 0.08), 0 8px 10px -6px rgba(15, 56, 34, 0.04);
+    --card-shadow-hover: 0 20px 30px -10px rgba(15, 56, 34, 0.16), 0 10px 15px -5px rgba(15, 56, 34, 0.08);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Base resets & typography */
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    background-color: var(--neutral-light);
+    color: var(--neutral-dark);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--primary-forest);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.scientific-name {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-style: italic;
+    color: var(--primary-green);
+}
+
+/* 
+=============================================================================
+ NAVBAR
+=============================================================================
+*/
+.navbar-custom {
+    background: linear-gradient(135deg, #092615 0%, #0f3822 100%);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
+    padding: 0.75rem 1rem;
+    transition: var(--transition-smooth);
+    border-bottom: 2px solid rgba(34, 197, 94, 0.2);
+}
+
+.brand-icon-wrapper {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: rgba(34, 197, 94, 0.2);
+    border: 1px solid rgba(34, 197, 94, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    color: var(--accent-emerald);
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
+}
+
+.brand-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.3px;
+}
+
+.brand-subtitle {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 500;
+    padding: 0.5rem 0.85rem !important;
+    border-radius: 8px;
+    transition: var(--transition-smooth);
+    margin: 0 2px;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 12px rgba(34, 197, 94, 0.35);
+}
+
+.nav-link i {
+    margin-right: 4px;
+}
+
+/*
+=============================================================================
+ GREEN GLOW BUTTONS & HOVER EFFECTS
+=============================================================================
+*/
+.btn-glow-green {
+    background: linear-gradient(135deg, #15803d 0%, #16a34a 100%);
+    color: #ffffff !important;
+    border: 1px solid rgba(34, 197, 94, 0.5);
+    font-weight: 600;
+    padding: 0.65rem 1.4rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(21, 128, 61, 0.3);
+    transition: var(--transition-smooth);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-glow-green:hover, .btn-glow-green:focus {
+    background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
+    color: #ffffff !important;
+    box-shadow: var(--glow-shadow-strong);
+    transform: translateY(-2px);
+    border-color: rgba(34, 197, 94, 0.9);
+}
+
+.btn-glow-outline {
+    background-color: transparent;
+    color: var(--primary-forest) !important;
+    border: 2px solid var(--primary-forest);
+    font-weight: 600;
+    padding: 0.6rem 1.3rem;
+    border-radius: 10px;
+    transition: var(--transition-smooth);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn-glow-outline:hover {
+    background-color: var(--primary-forest);
+    color: #ffffff !important;
+    box-shadow: var(--glow-shadow);
+    transform: translateY(-2px);
+}
+
+.btn-glow-light {
+    background-color: #ffffff;
+    color: var(--primary-forest) !important;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    font-weight: 600;
+    padding: 0.65rem 1.4rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: var(--transition-smooth);
+}
+
+.btn-glow-light:hover {
+    background-color: var(--accent-light);
+    color: var(--primary-green) !important;
+    box-shadow: var(--glow-shadow);
+    transform: translateY(-2px);
+}
+
+/*
+=============================================================================
+ HERO SECTION
+=============================================================================
+*/
+.hero-section {
+    background-image: url('../images/hero_bg.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    color: #ffffff;
+    padding: 4.5rem 1rem 5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(8, 28, 16, 0.65) 0%, rgba(12, 42, 24, 0.45) 50%, rgba(8, 28, 16, 0.55) 100%);
+    z-index: 0;
+}
+
+.hero-section > .container {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 35px;
+    background: var(--neutral-light);
+    clip-path: ellipse(65% 100% at 50% 100%);
+    z-index: 1;
+}
+
+.hero-badge {
+    background: rgba(34, 197, 94, 0.2);
+    border: 1px solid rgba(34, 197, 94, 0.4);
+    color: #86efac;
+    padding: 0.35rem 1rem;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.2);
+}
+
+.hero-title {
+    font-size: 2.85rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.15;
+    margin-bottom: 1.25rem;
+}
+
+.hero-subtitle {
+    font-size: 1.15rem;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 600px;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.hero-image-wrapper {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(34, 197, 94, 0.2);
+    border: 2px solid rgba(34, 197, 94, 0.3);
+    background: #092615;
+}
+
+.hero-image-wrapper img {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+    display: block;
+    transition: var(--transition-smooth);
+}
+
+.hero-image-wrapper:hover img {
+    transform: scale(1.03);
+}
+
+/*
+=============================================================================
+ CARDS & STATS
+=============================================================================
+*/
+.custom-card {
+    background-color: var(--neutral-white);
+    border: 1px solid rgba(21, 128, 61, 0.12);
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    transition: var(--transition-smooth);
+    overflow: hidden;
+}
+
+.custom-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--card-shadow-hover);
+    border-color: rgba(34, 197, 94, 0.4);
+}
+
+.feature-icon-wrapper {
+    width: 58px;
+    height: 58px;
+    border-radius: 14px;
+    background: var(--accent-light);
+    color: var(--primary-forest);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    margin-bottom: 1.2rem;
+    transition: var(--transition-smooth);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.custom-card:hover .feature-icon-wrapper {
+    background: var(--primary-forest);
+    color: #ffffff;
+    box-shadow: var(--glow-shadow);
+}
+
+/*
+=============================================================================
+ UPLOAD & DETECTION ZONE
+=============================================================================
+*/
+.upload-container-wrapper {
+    position: relative;
+}
+
+.leaf-decoration-left, .leaf-decoration-right {
+    position: absolute;
+    font-size: 3rem;
+    color: rgba(34, 197, 94, 0.2);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.leaf-decoration-left {
+    top: -20px;
+    left: -25px;
+    transform: rotate(-25deg);
+}
+
+.leaf-decoration-right {
+    bottom: -20px;
+    right: -25px;
+    transform: rotate(45deg);
+}
+
+.dropzone-container {
+    border: 2px dashed rgba(21, 128, 61, 0.35);
+    border-radius: 20px;
+    background-color: #fbfdfc;
+    padding: 3.5rem 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    position: relative;
+}
+
+.dropzone-container:hover, .dropzone-container.dragover {
+    border-color: var(--accent-emerald);
+    background-color: var(--accent-light);
+    box-shadow: var(--glow-shadow);
+}
+
+.dropzone-icon {
+    font-size: 3.5rem;
+    color: var(--primary-forest);
+    margin-bottom: 1rem;
+    animation: floatUpDown 3s ease-in-out infinite;
+}
+
+@keyframes floatUpDown {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+.image-preview-wrapper {
+    max-width: 380px;
+    margin: 1.5rem auto 0;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    border: 3px solid #ffffff;
+    display: none;
+}
+
+.image-preview-wrapper img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    display: block;
+}
+
+/*
+=============================================================================
+ RESULT CARD & CONFIDENCE GAUGE
+=============================================================================
+*/
+.result-header-card {
+    background: linear-gradient(135deg, #092615 0%, #0f3822 55%, #15803d 100%);
+    color: #ffffff;
+    border-radius: 18px;
+    padding: 2.2rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--card-shadow-hover);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.confidence-progress-container {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    height: 18px;
+    overflow: hidden;
+    margin: 1rem 0;
+}
+
+.confidence-progress-bar {
+    background: linear-gradient(90deg, #4ade80 0%, #22c55e 100%);
+    height: 100%;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
+    transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/*
+=============================================================================
+ AUTHENTICATION PAGES (LOGIN / REGISTER)
+=============================================================================
+*/
+.auth-page-wrapper {
+    background: linear-gradient(135deg, rgba(9, 38, 21, 0.92) 0%, rgba(15, 56, 34, 0.88) 100%), 
+                url('/media/hero_plant.jpg') center/cover no-repeat;
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+}
+
+.auth-card {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    overflow: hidden;
+}
+
+/*
+=============================================================================
+ FOOTER
+=============================================================================
+*/
+.footer-custom {
+    background: linear-gradient(180deg, #092615 0%, #05180d 100%);
+    color: rgba(255, 255, 255, 0.85);
+    padding: 3.5rem 1rem 1.5rem;
+    border-top: 3px solid var(--accent-emerald);
+}
+
+.footer-custom a {
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+    transition: var(--transition-smooth);
+}
+
+.footer-custom a:hover {
+    color: #22c55e;
+    padding-left: 4px;
+}
+
+/*
+=============================================================================
+ LOADING OVERLAY (shown only during form submission - hidden by default)
+=============================================================================
+*/
+#loading-overlay {
+    display: none; /* Hidden by default — only shown via JS on form submit */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(9, 38, 21, 0.93);
+    z-index: 9999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    text-align: center;
+}
+
+.plant-spinner {
+    width: 56px;
+    height: 56px;
+    border: 5px solid rgba(34, 197, 94, 0.25);
+    border-top-color: #22c55e;
+    border-radius: 50%;
+    animation: spinLeaf 0.9s linear infinite;
+    margin-bottom: 1.5rem;
+}
+
+@keyframes spinLeaf {
+    to { transform: rotate(360deg); }
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.1rem;
+    }
+    .hero-section {
+        padding: 3rem 1rem 4rem;
+    }
+    .dropzone-container {
+        padding: 2.2rem 1rem;
+    }
+    .hero-image-wrapper img {
+        height: 260px;
+    }
+}
